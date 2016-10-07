@@ -1,0 +1,17 @@
+<job id="SampleBatchApp" restartable="true" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="step1">
+        <chunk checkpoint-policy="item" item-count="10000">
+            <reader ref="sampleChunkReader">
+                <properties>
+                    <property name="fileName" value="batchFiles/in/words.txt"/>
+                </properties>
+            </reader>
+            <processor ref="sampleChunkProcessor"/>
+            <writer ref="sampleChunkWriter">
+                <properties>
+                    <property name="fileName" value="batchFiles/out/output.txt"/>
+                </properties>
+            </writer>
+        </chunk>
+    </step>
+</job>
