@@ -1,0 +1,6 @@
+<batch-artifacts xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <ref id="sampleChunkReader" class="org.sergei.StringReader"/>
+    <ref id="sampleChunkProcessor" class="org.sergei.StringProcessor"/>
+    <ref id="sampleChunkWriter" class="org.sergei.StringWriter"/>
+    <ref id="samplePartitionMapper" class="org.sergei.FilesInFolderPartitionMapper"/>
+</batch-artifacts>
