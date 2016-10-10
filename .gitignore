@@ -3,4 +3,5 @@ P029_JBatch_Sample.iml
 RUNTIMEDB/
 derby.log
 out/
-#*/target
+*/target
+#*.iml
