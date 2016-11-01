@@ -10,12 +10,59 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jsr352-se</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <java.version>1.8</java.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>a</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/derby.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>b</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/javax.batch.api.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>c</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/javax.inject.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>d</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jsr352-RI-spi.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>e</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jsr352-SE-RI-javadoc.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>doesntMatter</groupId>
+            <artifactId>f</artifactId>
+            <version>1</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/jsr352-SE-RI-runtime.jar</systemPath>
+        </dependency>
+    </dependencies>
+
     <build>
+        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -24,11 +71,25 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <includes>
+                    <!--<includes>
+                        <include>src/main/java/org/sergei/*.java</include>
                         <include>lib/*.jar</include>
-                    </includes>
+                    </includes>-->
                 </configuration>
             </plugin>
+            <!--<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <includes>
+                        <include>${project.build.outputDirectory}/*.class</include>
+                    </includes>
+                    &lt;!&ndash;<archive>
+                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>&ndash;&gt;
+                </configuration>
+            </plugin>-->
         </plugins>
     </build>
 
