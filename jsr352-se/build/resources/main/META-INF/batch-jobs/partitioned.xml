@@ -3,16 +3,23 @@
         <chunk checkpoint-policy="item" item-count="10000">
             <reader ref="sampleChunkReader">
                 <properties>
-                    <property name="fileName" value="#{jobParameters['file.in']}"/>
-                    <!--<property name="fileName" value="batchFiles/in/words.txt"/>-->
+                    <property name="fileName" value="#{partitionPlan['input.fileName']}"/>
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>
             <writer ref="sampleChunkWriter">
                 <properties>
-                    <property name="fileName" value="batchFiles/out/output.txt"/>
+                    <property name="fileName" value="#{partitionPlan['output.fileName']}"/>
                 </properties>
             </writer>
         </chunk>
+        <partition>
+            <mapper ref="samplePartitionMapper">
+                <properties>
+                    <property name="filePath" value="batchFiles/in"/>
+                    <property name="outputPath" value="batchFiles/out"/>
+                </properties>
+            </mapper>
+        </partition>
     </step>
 </job>

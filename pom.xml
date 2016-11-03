@@ -14,7 +14,6 @@
         <module>wf-sample-1</module>
         <module>wf-sample-2</module>
         <module>legacy-batch</module>
-        <module>sb-admin</module>
     </modules>
 
 </project>

@@ -1,0 +1,27 @@
+<job id="load-csv" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="load">
+        <chunk>
+            <reader ref="csvItemReader">
+                <properties>
+                    <property name="resource" value="#{jobParameters['resource']}"/>
+                    <property name="headerless" value="true"/>
+                    <property name="delimiterChar" value=";"/>
+                    <property name="beanType" value="java.util.List"/>
+                </properties>
+            </reader>
+            <processor ref="forexItemProcessor">
+                <properties>
+                    <property name="symbol" value="#{jobParameters['symbol']}"/>
+                </properties>
+            </processor>
+            <writer ref="jdbcItemWriter">
+                <properties>
+                    <property name="dataSourceLookup" value="java:jboss/datasources/MyDS"/>
+                    <property name="sql"
+                              value="INSERT INTO forex (symbol, ts, bid_open, bid_high, bid_low, bid_close, volume) values (?, ?, ?, ?, ?, ?, ?)"/>
+                    <property name="beanType" value="java.util.List"/>
+                </properties>
+            </writer>
+        </chunk>
+    </step>
+</job>

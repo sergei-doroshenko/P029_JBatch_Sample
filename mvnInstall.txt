@@ -1,0 +1,2 @@
+ mvn install:install-file -Dfile=spring-batch-admin-manager-2.0.0.M1.jar -DgroupId=org.springframework.batch -DartifactId=spring-batch-admin-manager -Dversion=2.0.0.M1 -Dpackaging=jar
+ mvn install:install-file -Dfile=spring-batch-admin-resources-2.0.0.M1.jar -DgroupId=org.springframework.batch -DartifactId=spring-batch-admin-resources -Dversion=2.0.0.M1 -Dpackaging=jar

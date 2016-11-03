@@ -71,25 +71,23 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <!--<includes>
-                        <include>src/main/java/org/sergei/*.java</include>
-                        <include>lib/*.jar</include>
-                    </includes>-->
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
-                    <includes>
-                        <include>${project.build.outputDirectory}/*.class</include>
-                    </includes>
-                    &lt;!&ndash;<archive>
-                        <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>&ndash;&gt;
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>org.sergei.batch.App</mainClass>
+                        </manifest>
+                        <!--<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>-->
+                    </archive>
                 </configuration>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 

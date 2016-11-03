@@ -1,0 +1,22 @@
+<job id="save-csv" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <step id="save">
+        <chunk>
+            <reader ref="jdbcItemReader">
+                <properties>
+                    <property name="dataSourceLookup" value="java:jboss/datasources/MyNonJtaDS"/>
+                    <property name="sql"
+                              value="SELECT symbol, ts, bid_open, bid_high, bid_low, bid_close, volume FROM forex ORDER BY symbol, ts"/>
+                    <property name="beanType" value="java.util.List"/>
+                </properties>
+            </reader>
+            <writer ref="csvItemWriter">
+                <properties>
+                    <property name="resource" value="#{jobParameters['resource']}"/>
+                    <property name="header"
+                              value="symbol, ts, bid_open, bid_high, bid_low, bid_close, volume"/>
+                    <property name="beanType" value="java.util.List"/>
+                </properties>
+            </writer>
+        </chunk>
+    </step>
+</job>
