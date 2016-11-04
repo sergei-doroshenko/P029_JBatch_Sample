@@ -25,3 +25,7 @@ sql> CREATE TABLE forex (
 );
 
 $ curl 'http://localhost:8080/batch-test/jbatch/rest/start/load-csv?symbol=USDJPY&resource=D:\batch_file_test\DAT_ASCII_USDJPY_M1_201504.csv'
+
+csv2json
+cause exception while try to load job definition from jar
+javax.batch.operations.JobStartException: JBERET000601: Failed to get job xml file for job csvItemReader.xml

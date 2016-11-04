@@ -11,9 +11,7 @@
 
     <modules>
         <module>jsr352-se</module>
-        <module>wf-sample-1</module>
         <module>wf-sample-2</module>
-        <module>legacy-batch</module>
     </modules>
 
 </project>

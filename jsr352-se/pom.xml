@@ -63,6 +63,7 @@
     </dependencies>
 
     <build>
+        <finalName>jsr352-se-test</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <plugins>
             <plugin>
