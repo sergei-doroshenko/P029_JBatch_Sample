@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+	
+	<bean id="student" class="org.sergei.StudentModel" scope="prototype"/>
+	
+	<batch:job id="batchJob" restartable="true">
+		<batch:step id="batchStep">
+			<batch:tasklet allow-start-if-complete="true">
+				<batch:chunk reader="itemReader" writer="itemWriter" commit-interval="2"></batch:chunk>
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+	
+	
+	<!-- Read data from the csv file-->
+	<bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
+   		<property name="resource" value="classpath:META-INF/sampleData/studentData.csv"></property>
+   		<property name="linesToSkip" value="1"></property>
+   		<property name="lineMapper">
+   			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+   				<property name="lineTokenizer">
+   					<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+   						<property name="names" value="firstName,lastName,school,rollNumber"></property>
+   					</bean>
+   			    </property>
+   				<property name="fieldSetMapper">
+   					<bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+   						<property name="prototypeBeanName" value="student"></property>
+   					</bean>
+   				</property>
+   			</bean>
+   		</property>
+   </bean>
+	
+	<!-- Write data into a database table named: STUDENT_DATA 
+	<bean id="itemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+   		<property name="dataSource" ref="dataSource"></property>
+   		<property name="sql">
+	   		<value>
+	   			<![CDATA[
+	   			    insert into STUDENT_DATA(firstName,lastName,school, rollNumber)
+	   				values (:firstName,:lastName,:school,:rollNumber)
+	   			]]>
+	   		</value>
+   		</property>
+   		<property name="itemSqlParameterSourceProvider">
+   			<bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+   		</property>
+   </bean>-->
+   
+    <bean id="itemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
+		<property name="resource" value="file:xml/student_data.xml"></property>
+		<property name="marshaller" ref="unmarshaller"></property>
+		<property name="rootTagName" value="students"></property>
+   </bean>
+   
+   <bean id="unmarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+   	<property name="aliases">
+   		<util:map id="aliases">
+   			<entry key="student" value="org.sergei.StudentModel"></entry>
+   		</util:map>
+   	</property>
+   </bean>
+   
+   <!--  This is to make use of the spring provided test launcher -->
+   <bean class="org.springframework.batch.test.JobLauncherTestUtils"/>
+	
+</beans>
