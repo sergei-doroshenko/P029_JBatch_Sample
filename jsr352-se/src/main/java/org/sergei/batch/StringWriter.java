@@ -34,6 +34,7 @@ public class StringWriter implements ItemWriter {
     @Override
     public void writeItems(List<Object> list) throws Exception {
         for(Object line : list) {
+            System.out.println("Writer thread : " + Thread.currentThread().getName() + ", writes: " + line );
             writer.write(line + "\n");
         }
     }

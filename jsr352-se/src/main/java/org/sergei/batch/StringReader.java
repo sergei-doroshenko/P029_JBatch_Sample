@@ -47,7 +47,11 @@ public class StringReader implements ItemReader {
         String line = lineReader.readLine();
 
         if(line == null) {
-            System.out.println("Returning null from reader at " + new SimpleDateFormat("hh:mm:ss").format(new Date()));
+            System.out.println( "Returning null from reader: "
+                    + Thread.currentThread().getName()
+                    + " at " + new SimpleDateFormat("hh:mm:ss").format(new Date()) );
+        } else {
+            System.out.println("Reader thread : " + Thread.currentThread().getName() + ", reads: " + line );
         }
 
         return line;

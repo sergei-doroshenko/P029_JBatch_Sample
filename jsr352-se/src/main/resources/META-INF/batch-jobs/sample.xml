@@ -4,13 +4,12 @@
             <reader ref="sampleChunkReader">
                 <properties>
                     <property name="fileName" value="#{jobParameters['file.in']}"/>
-                    <!--<property name="fileName" value="batchFiles/in/words.txt"/>-->
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>
             <writer ref="sampleChunkWriter">
                 <properties>
-                    <property name="fileName" value="batchFiles/out/output.txt"/>
+                    <property name="fileName" value="#{jobParameters['file.out']}"/>
                 </properties>
             </writer>
         </chunk>

@@ -14,6 +14,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <spring.version>4.0.1.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -82,7 +83,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>org.sergei.batch.App</mainClass>
+                            <mainClass>org.sergei.batch.BatchApp</mainClass>
                         </manifest>
                         <!--<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>-->
                     </archive>
