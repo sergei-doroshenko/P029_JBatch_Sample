@@ -1,2 +1,7 @@
 hello
 goodbye
+test
+encapsulation
+apple
+example
+home

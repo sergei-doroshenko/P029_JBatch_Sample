@@ -20,26 +20,27 @@
 	<batch:job id="batchJob" restartable="true">
 		<batch:step id="batchStep">
 			<batch:tasklet allow-start-if-complete="true">
-				<batch:chunk reader="itemReader" writer="itemWriter" commit-interval="2"></batch:chunk>
+				<batch:chunk reader="itemReader"
+							 writer="itemWriter"
+							 commit-interval="2"/>
 			</batch:tasklet>
 		</batch:step>
 	</batch:job>
 	
-	
 	<!-- Read data from the csv file-->
 	<bean id="itemReader" class="org.springframework.batch.item.file.FlatFileItemReader">
-   		<property name="resource" value="classpath:META-INF/sampleData/studentData.csv"></property>
-   		<property name="linesToSkip" value="1"></property>
+   		<property name="resource" value="classpath:META-INF/sampleData/studentData.csv"/>
+   		<property name="linesToSkip" value="1"/>
    		<property name="lineMapper">
    			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
    				<property name="lineTokenizer">
    					<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
-   						<property name="names" value="firstName,lastName,school,rollNumber"></property>
+   						<property name="names" value="firstName,lastName,school,rollNumber"/>
    					</bean>
    			    </property>
    				<property name="fieldSetMapper">
    					<bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
-   						<property name="prototypeBeanName" value="student"></property>
+   						<property name="prototypeBeanName" value="student"/>
    					</bean>
    				</property>
    			</bean>
@@ -63,15 +64,15 @@
    </bean>-->
    
     <bean id="itemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
-		<property name="resource" value="file:xml/student_data.xml"></property>
-		<property name="marshaller" ref="unmarshaller"></property>
-		<property name="rootTagName" value="students"></property>
+		<property name="resource" value="file:xml/student_data.xml"/>
+		<property name="marshaller" ref="unmarshaller"/>
+		<property name="rootTagName" value="students"/>
    </bean>
    
    <bean id="unmarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
    	<property name="aliases">
    		<util:map id="aliases">
-   			<entry key="student" value="org.sergei.StudentModel"></entry>
+   			<entry key="student" value="org.sergei.StudentModel"/>
    		</util:map>
    	</property>
    </bean>

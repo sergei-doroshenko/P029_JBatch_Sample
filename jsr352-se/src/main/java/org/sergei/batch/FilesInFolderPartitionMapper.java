@@ -39,9 +39,9 @@ public class FilesInFolderPartitionMapper implements PartitionMapper {
         int i = 0;
         PartitionPlan plan = new PartitionPlanImpl();
         Properties[] properties = new Properties[ entryPaths.size() ];
-
+        // In example partitions number == entryPaths
         for ( String entry : entryPaths ) {
-            properties[i] = new Properties();
+            properties[i] = new Properties(); // properties for each partition
             properties[i].setProperty("input.fileName", entry);
             properties[i].setProperty("output.fileName", outputPath + File.separator + "/partition_" + i + ".txt");
 

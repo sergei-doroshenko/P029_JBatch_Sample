@@ -60,6 +60,18 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/jsr352-SE-RI-runtime.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>net.sf.jsefa</groupId>
+            <artifactId>jsefa</artifactId>
+            <version>1.1.0.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-zip</artifactId>
+            <version>1.10</version>
+        </dependency>
+
     </dependencies>
 
     <build>

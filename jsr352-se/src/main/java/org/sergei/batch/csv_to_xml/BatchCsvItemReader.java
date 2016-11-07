@@ -1,4 +1,4 @@
-package org.sergei.batch;
+package org.sergei.batch.csv_to_xml;
 
 import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.ItemReader;
@@ -7,15 +7,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
- * Created by Sergei_Doroshenko on 10/7/2016.
+ * Created by Sergei_Doroshenko on 11/7/2016.
  */
-public class StringReader implements ItemReader {
+public class BatchCsvItemReader implements ItemReader {
     private BufferedReader lineReader;
     private int lineNumber;
+    private boolean alreadyFailed;
 
     @Inject
     @BatchProperty
@@ -28,7 +27,7 @@ public class StringReader implements ItemReader {
     public void open(Serializable serializable) throws Exception {
         lineReader = new BufferedReader(new FileReader(new File(fileName)));
 
-        if(serializable != null) {
+        if (serializable != null) {
             lineNumber = (Integer) serializable;
             for (int i = 0; i < lineNumber; i++) {
                 lineReader.readLine();
@@ -38,7 +37,9 @@ public class StringReader implements ItemReader {
 
     @Override
     public void close() throws Exception {
-        lineReader.close();
+        if (lineReader != null) {
+            lineReader.close();
+        }
     }
 
     @Override
@@ -46,13 +47,11 @@ public class StringReader implements ItemReader {
         ++lineNumber;
         String line = lineReader.readLine();
 
-        if(line == null) {
-            System.out.println( "Returning null from reader: "
-                    + Thread.currentThread().getName()
-                    + " at " + new SimpleDateFormat("hh:mm:ss").format(new Date()) );
-        } else {
-            System.out.println("Reader thread : " + Thread.currentThread().getName() + ", reads: " + line );
-        }
+        // Simulate a read exception when the lineNumber is equal to 5. Only once.
+        /*if (lineNumber == 1 && !alreadyFailed) {
+            alreadyFailed = true;
+            throw new IllegalArgumentException("Could not read record: " + line );
+        }*/
 
         return line;
     }
@@ -61,5 +60,4 @@ public class StringReader implements ItemReader {
     public Serializable checkpointInfo() throws Exception {
         return lineNumber;
     }
-
 }

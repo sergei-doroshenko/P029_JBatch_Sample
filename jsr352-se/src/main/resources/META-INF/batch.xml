@@ -1,6 +1,23 @@
 <batch-artifacts xmlns="http://xmlns.jcp.org/xml/ns/javaee">
-    <ref id="sampleChunkReader" class="org.sergei.batch.StringReader"/>
-    <ref id="sampleChunkProcessor" class="org.sergei.batch.StringProcessor"/>
-    <ref id="sampleChunkWriter" class="org.sergei.batch.StringWriter"/>
+    <ref id="bootstrapBatchlet" class="org.sergei.batch.BootstrapBatchlet"/>
+    <ref id="completeBatchlet" class="org.sergei.batch.CompleteBatchlet"/>
+
+    <ref id="sampleChunkReader" class="org.sergei.batch.BatchStringReader"/>
+    <ref id="sampleChunkProcessor" class="org.sergei.batch.BatchStringProcessor"/>
+
+    <ref id="batchCsvToXmlItemProcessor" class="org.sergei.batch.csv_to_xml.BatchCsvToXmlItemProcessor"/>
+
+    <ref id="sampleChunkWriter" class="org.sergei.batch.BatchStringWriter"/>
     <ref id="samplePartitionMapper" class="org.sergei.batch.FilesInFolderPartitionMapper"/>
+    <!-- listeners -->
+    <ref id="infoJobListener" class="org.sergei.batch.listeners.InfoJobListener"/>
+    <ref id="stringItemReadListener" class="org.sergei.batch.listeners.StringItemReadListener"/>
+    <ref id="stringItemWriteListener" class="org.sergei.batch.listeners.StringItemWriteListener"/>
+    <!-- read listeners -->
+    <ref id="stringSkipReadListener" class="org.sergei.batch.listeners.StringSkipReadListener"/>
+    <ref id="stringRetryReadListener" class="org.sergei.batch.listeners.StringRetryReadListener"/>
+    <!-- write listeners -->
+    <ref id="stringRetryWriteListener" class="org.sergei.batch.listeners.StringRetryWriteListener"/>
+    <!-- process listeners -->
+    <ref id="stringItemProcessorListener" class="org.sergei.batch.listeners.StringItemProcessorListener"/>
 </batch-artifacts>

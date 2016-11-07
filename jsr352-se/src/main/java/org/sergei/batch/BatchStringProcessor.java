@@ -5,7 +5,7 @@ import javax.batch.api.chunk.ItemProcessor;
 /**
  * Created by Sergei_Doroshenko on 10/7/2016.
  */
-public class StringProcessor implements ItemProcessor {
+public class BatchStringProcessor implements ItemProcessor {
 
     private StringBuffer buffer = new StringBuffer();
     private String temp;

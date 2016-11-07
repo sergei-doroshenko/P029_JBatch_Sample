@@ -1,17 +1,46 @@
-<job id="SampleBatchApp" restartable="true" version="1.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee">
-    <step id="step1">
-        <chunk checkpoint-policy="item" item-count="10000">
+<?xml version="1.0" encoding="UTF-8"?>
+<job xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd"
+     version="1.0"
+     id="sampleJob" restartable="true">
+    <listeners>
+        <listener ref="infoJobListener"/>
+    </listeners>
+
+    <step id="bootstrapStep" next="simpleConvert">
+        <batchlet ref="bootstrapBatchlet"/>
+    </step>
+
+    <step id="simpleConvert" next="compressStep">
+        <listeners>
+            <listener ref="stringItemReadListener"/>
+            <listener ref="stringItemWriteListener"/>
+            <listener ref="stringSkipReadListener"/>
+            <listener ref="stringRetryWriteListener"/>
+            <listener ref="stringItemProcessorListener"/>
+        </listeners>
+
+        <chunk checkpoint-policy="item" item-count="10000" skip-limit="3" retry-limit="3">
             <reader ref="sampleChunkReader">
                 <properties>
-                    <property name="fileName" value="#{jobParameters['file.in']}"/>
+                    <property name="fileName"
+                              value="#{jobParameters['file.in']}?:batchFiles/in/words.txt;"/>
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>
-            <writer ref="sampleChunkWriter">
-                <properties>
-                    <property name="fileName" value="#{jobParameters['file.out']}"/>
-                </properties>
-            </writer>
+            <!--<processor ref="batchCsvToXmlItemProcessor"/>-->
+            <writer ref="sampleChunkWriter"/>
+            <skippable-exception-classes>
+                <include class="java.lang.IllegalArgumentException"/>
+            </skippable-exception-classes>
+            <retryable-exception-classes>
+                <include class="java.lang.UnsupportedOperationException"/>
+            </retryable-exception-classes>
         </chunk>
+    </step>
+
+    <step id="compressStep">
+        <batchlet ref="completeBatchlet"/>
     </step>
 </job>

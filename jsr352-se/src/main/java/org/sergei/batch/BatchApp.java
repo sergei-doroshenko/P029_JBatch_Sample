@@ -1,5 +1,7 @@
 package org.sergei.batch;
 
+import org.sergei.batch.util.BatchUtils;
+
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
 import javax.batch.runtime.JobExecution;
@@ -14,7 +16,11 @@ import java.util.Properties;
  * Created by Sergei_Doroshenko on 10/7/2016.
  */
 public class BatchApp {
+
     public static void main ( String[] args ) {
+        if ( args.length == 0 ) {
+            throw new IllegalStateException("Define job name and parameters.");
+        }
         runJob( args[0] );
     }
 
@@ -23,44 +29,28 @@ public class BatchApp {
 
         Properties properties = new Properties();
         properties.setProperty( "file.in", "batchFiles/in/words.txt" );
-        properties.setProperty( "file.out", "batchFiles/out/output.txt" );
+//        properties.setProperty( "file.out", "batchFiles/out/output.txt" );
+
+//        properties.setProperty( "file.in", "test.csv" );
+//        properties.setProperty( "file.out", "out.xml" );
 
         long executionId = jobOperator.start( jobName, properties );
-
-        // Monitor the job
         JobExecution execution = jobOperator.getJobExecution( executionId );
-
-        System.out.println( "****************************************************************" );
-        System.out.println( "**             Job name: " + execution.getJobName() );
-        System.out.println( "**             Job create time:" + execution.getCreateTime() );
-        System.out.println( "**             Job start time: " + execution.getStartTime() );
-        System.out.println( "****************************************************************" );
-
-
-
         try {
-            Thread.sleep( 1000 * 10 );
+            Thread.sleep( 100 * 10 );
 
-            if ( execution.getExitStatus().equals( "COMPLETED" ) ) {
+            if ( execution.getExitStatus() != null && execution.getExitStatus().equals( "COMPLETED" ) ) {
 
-                System.out.println( "****************************************************************" );
-                System.out.println( "**             Job end time: " + execution.getEndTime() );
-                System.out.println( "**             Job exit status: " + execution.getExitStatus() );
-                System.out.println( "****************************************************************" );
+                System.out.println( BatchUtils.SEPARATOR );
+                System.out.printf( BatchUtils.STR_FORMAT, "Job end time", BatchUtils.DATE_FORMAT.format(execution.getEndTime()) );
+                System.out.printf( BatchUtils.STR_FORMAT, "Job exit status",  execution.getExitStatus() );
+                System.out.println( BatchUtils.SEPARATOR );
 
                 List<StepExecution> stepExecutions = jobOperator.getStepExecutions( executionId );
 
                 for ( StepExecution stepExecution : stepExecutions ) {
-
-                    System.out.println( "**             Step name: " + stepExecution.getStepName() );
-
-                    Map<Metric.MetricType, Long> metricsMap = getMetricsMap( stepExecution.getMetrics() );
-
-                    System.out.println( "**             Read count: " + metricsMap.get( Metric.MetricType.READ_COUNT ).longValue() );
-                    System.out.println( "**             Write count: " + metricsMap.get( Metric.MetricType.WRITE_COUNT ).longValue() );
-                    System.out.println( "**             Commit count:" + metricsMap.get( Metric.MetricType.COMMIT_COUNT ).longValue() );
+                    printMetrics( stepExecution );
                 }
-
 
                 System.exit( 0 );
             }
@@ -75,5 +65,20 @@ public class BatchApp {
             metricsMap.put( metric.getType(), metric.getValue() );
         }
         return metricsMap;
+    }
+
+    private static void printMetrics(StepExecution stepExecution) {
+
+        System.out.printf( BatchUtils.STR_FORMAT, "Step name", stepExecution.getStepName() );
+
+        Map<Metric.MetricType, Long> metricsMap = getMetricsMap( stepExecution.getMetrics() );
+
+        System.out.printf( BatchUtils.NUM_FORMAT, "Read count", metricsMap.get( Metric.MetricType.READ_COUNT ).longValue() );
+        System.out.printf( BatchUtils.NUM_FORMAT, "Write count", metricsMap.get( Metric.MetricType.WRITE_COUNT ).longValue() );
+        System.out.printf( BatchUtils.NUM_FORMAT, "Read skip count", metricsMap.get( Metric.MetricType.READ_SKIP_COUNT ).longValue() );
+        System.out.printf( BatchUtils.NUM_FORMAT, "Write skip count", metricsMap.get( Metric.MetricType.WRITE_SKIP_COUNT ).longValue() );
+        System.out.printf( BatchUtils.NUM_FORMAT, "Commit count", metricsMap.get( Metric.MetricType.COMMIT_COUNT ).longValue() );
+
+        System.out.println( BatchUtils.SEPARATOR );
     }
 }
