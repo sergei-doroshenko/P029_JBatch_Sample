@@ -13,6 +13,7 @@
         <module>jsr352-se</module>
         <module>wf-sample-2</module>
         <module>spring-batch</module>
+        <module>spring-batch-adm</module>
     </modules>
 
 </project>
