@@ -1,4 +1,4 @@
-package org.sergei.batch;
+package org.sergei.batch.partition;
 
 import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.ItemWriter;

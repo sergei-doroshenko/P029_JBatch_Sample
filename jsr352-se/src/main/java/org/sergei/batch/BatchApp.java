@@ -29,6 +29,7 @@ public class BatchApp {
 
         Properties properties = new Properties();
         properties.setProperty( "file.in", "batchFiles/in/words.txt" );
+        properties.setProperty( "part.dir.out", "batchFiles/out" );
 //        properties.setProperty( "file.out", "batchFiles/out/output.txt" );
 
 //        properties.setProperty( "file.in", "test.csv" );

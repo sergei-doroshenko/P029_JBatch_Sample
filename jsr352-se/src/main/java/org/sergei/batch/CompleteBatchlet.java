@@ -20,6 +20,7 @@ public class CompleteBatchlet extends AbstractBatchlet {
         String fileName = jobContext.getProperties().getProperty( "job.out.dir" );
         String zipFileName = jobContext.getProperties().getProperty( "out.dir" ) +  "\\results.zip";
         ZipUtil.pack(new File(fileName), new File(zipFileName));
-        return null;
+
+        return "COMPLETED";
     }
 }

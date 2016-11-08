@@ -46,6 +46,8 @@
                               value="#{jobParameters['part.dir.out']}?:batchFiles/out;"/>
                 </properties>
             </mapper>
+            <reducer ref="org.sergei.batch.partition.ArchivePartitionReducerImpl"/>
         </partition>
+
     </step>
 </job>

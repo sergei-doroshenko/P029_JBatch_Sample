@@ -38,6 +38,6 @@ public class BootstrapBatchlet extends AbstractBatchlet {
                 Charset.forName("UTF-8"));
 
         System.out.println(BatchRuntime.getJobOperator().getJobExecution(jobContext.getExecutionId()).getJobParameters());
-        return null;
+        return "COMPLETED";
     }
 }

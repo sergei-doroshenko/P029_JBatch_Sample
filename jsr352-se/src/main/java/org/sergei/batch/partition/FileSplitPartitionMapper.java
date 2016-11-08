@@ -1,9 +1,10 @@
-package org.sergei.batch;
+package org.sergei.batch.partition;
 
 import javax.batch.api.BatchProperty;
 import javax.batch.api.partition.PartitionMapper;
 import javax.batch.api.partition.PartitionPlan;
 import javax.batch.api.partition.PartitionPlanImpl;
+import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import java.io.*;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class FileSplitPartitionMapper implements PartitionMapper {
     @Inject
     @BatchProperty
     private String outputPath;
+
+    @Inject
+    private JobContext jobContext;
 
     @Override
     public PartitionPlan mapPartitions() throws Exception {
@@ -66,6 +70,8 @@ public class FileSplitPartitionMapper implements PartitionMapper {
 
         plan.setPartitions( properties.length );
         plan.setPartitionProperties( properties );
+
+        jobContext.getProperties().setProperty( "out.dir", outputPath );
 
         return plan;
     }

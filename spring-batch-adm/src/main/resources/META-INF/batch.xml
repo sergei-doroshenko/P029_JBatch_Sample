@@ -2,5 +2,5 @@
     <ref id="sampleChunkReader" class="org.sergei.batch.StringReader"/>
     <ref id="sampleChunkProcessor" class="org.sergei.batch.StringProcessor"/>
     <ref id="sampleChunkWriter" class="org.sergei.batch.StringWriter"/>
-    <ref id="samplePartitionMapper" class="org.sergei.batch.FilesInFolderPartitionMapper"/>
+    <ref id="samplePartitionMapper" class="org.sergei.batch.partition.FilesInFolderPartitionMapper"/>
 </batch-artifacts>
