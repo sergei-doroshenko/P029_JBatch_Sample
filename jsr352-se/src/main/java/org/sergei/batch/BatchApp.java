@@ -37,7 +37,7 @@ public class BatchApp {
         long executionId = jobOperator.start( jobName, properties );
         JobExecution execution = jobOperator.getJobExecution( executionId );
         try {
-            Thread.sleep( 100 * 10 );
+            Thread.sleep( 1000 * 10 );
 
             if ( execution.getExitStatus() != null && execution.getExitStatus().equals( "COMPLETED" ) ) {
 

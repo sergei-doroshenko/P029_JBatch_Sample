@@ -4,11 +4,18 @@
      xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd"
      version="1.0"
      id="partitioned" restartable="true">
-    <step id="step1">
+    <listeners>
+        <listener ref="infoJobListener"/>
+    </listeners>
+    <step id="partitionedConvert">
         <listeners>
             <listener ref="stringItemReadListener"/>
             <listener ref="stringItemWriteListener"/>
+            <listener ref="stringSkipReadListener"/>
+            <listener ref="stringRetryWriteListener"/>
+            <listener ref="stringItemProcessorListener"/>
         </listeners>
+
         <chunk checkpoint-policy="item" item-count="10000" skip-limit="3" retry-limit="3">
             <reader ref="sampleChunkReader">
                 <properties>
@@ -16,26 +23,25 @@
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>
-            <writer ref="sampleChunkWriter">
+            <writer ref="sampleChunkWriter2">
                 <properties>
                     <property name="fileName" value="#{partitionPlan['output.fileName']}"/>
                 </properties>
             </writer>
             <skippable-exception-classes>
-                <include class="java.lang.RuntimeException"/>
-                <include class="java.lang.UnsupportedOperationException"/>
-                <include class="java.io.FileNotFoundException"/>
+                <include class="java.lang.IllegalArgumentException"/>
             </skippable-exception-classes>
             <retryable-exception-classes>
-                <include class="java.lang.IllegalArgumentException"/>
                 <include class="java.lang.UnsupportedOperationException"/>
             </retryable-exception-classes>
         </chunk>
         <partition>
-            <mapper ref="samplePartitionMapper">
+            <mapper ref="fileSplitPartitionMapper">
                 <properties>
                     <property name="filePath"
                               value="#{jobParameters['part.dir.in']}?:batchFiles/in;"/>
+                    <property name="inputFile"
+                              value="#{jobParameters['part.file.in']}?:batchFiles/in/input.txt;"/>
                     <property name="outputPath"
                               value="#{jobParameters['part.dir.out']}?:batchFiles/out;"/>
                 </properties>

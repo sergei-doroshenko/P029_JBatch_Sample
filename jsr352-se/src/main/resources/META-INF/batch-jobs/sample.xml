@@ -29,7 +29,6 @@
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>
-            <!--<processor ref="batchCsvToXmlItemProcessor"/>-->
             <writer ref="sampleChunkWriter"/>
             <skippable-exception-classes>
                 <include class="java.lang.IllegalArgumentException"/>

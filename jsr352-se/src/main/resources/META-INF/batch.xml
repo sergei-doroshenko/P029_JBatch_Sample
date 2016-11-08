@@ -8,7 +8,10 @@
     <ref id="batchCsvToXmlItemProcessor" class="org.sergei.batch.csv_to_xml.BatchCsvToXmlItemProcessor"/>
 
     <ref id="sampleChunkWriter" class="org.sergei.batch.BatchStringWriter"/>
+    <ref id="sampleChunkWriter2" class="org.sergei.batch.BatchStringWriter2"/>
     <ref id="samplePartitionMapper" class="org.sergei.batch.FilesInFolderPartitionMapper"/>
+    <ref id="fileSplitPartitionMapper" class="org.sergei.batch.FileSplitPartitionMapper"/>
+
     <!-- listeners -->
     <ref id="infoJobListener" class="org.sergei.batch.listeners.InfoJobListener"/>
     <ref id="stringItemReadListener" class="org.sergei.batch.listeners.StringItemReadListener"/>
