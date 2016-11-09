@@ -3,14 +3,8 @@ package org.sergei.batch;
 import org.sergei.batch.util.BatchUtils;
 
 import javax.batch.operations.JobOperator;
-import javax.batch.runtime.BatchRuntime;
-import javax.batch.runtime.JobExecution;
-import javax.batch.runtime.Metric;
-import javax.batch.runtime.StepExecution;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import javax.batch.runtime.*;
+import java.util.*;
 
 /**
  * Created by Sergei_Doroshenko on 10/7/2016.
@@ -28,17 +22,20 @@ public class BatchApp {
         JobOperator jobOperator = BatchRuntime.getJobOperator();
 
         Properties properties = new Properties();
-        properties.setProperty( "file.in", "batchFiles/in/words.txt" );
+        properties.setProperty( "file.in", "batchFiles/in/input.txt" );
         properties.setProperty( "part.dir.out", "batchFiles/out" );
 //        properties.setProperty( "file.out", "batchFiles/out/output.txt" );
 
 //        properties.setProperty( "file.in", "test.csv" );
 //        properties.setProperty( "file.out", "out.xml" );
 
+//        printPreviousExecutions( jobOperator );
+
         long executionId = jobOperator.start( jobName, properties );
         JobExecution execution = jobOperator.getJobExecution( executionId );
+
         try {
-            Thread.sleep( 1000 * 10 );
+            Thread.sleep( 100 * 10 );
 
             if ( execution.getExitStatus() != null && execution.getExitStatus().equals( "COMPLETED" ) ) {
 
@@ -49,9 +46,7 @@ public class BatchApp {
 
                 List<StepExecution> stepExecutions = jobOperator.getStepExecutions( executionId );
 
-                for ( StepExecution stepExecution : stepExecutions ) {
-                    printMetrics( stepExecution );
-                }
+                stepExecutions.forEach( stepExecution -> printMetrics( stepExecution ) );
 
                 System.exit( 0 );
             }
@@ -62,9 +57,8 @@ public class BatchApp {
 
     private static Map<Metric.MetricType, Long> getMetricsMap ( Metric[] metrics ) {
         Map<Metric.MetricType, Long> metricsMap = new HashMap<>();
-        for ( Metric metric : metrics ) {
-            metricsMap.put( metric.getType(), metric.getValue() );
-        }
+        Arrays.stream( metrics ).forEach( m -> metricsMap.put( m.getType(), m.getValue() ) );
+
         return metricsMap;
     }
 
@@ -81,5 +75,14 @@ public class BatchApp {
         System.out.printf( BatchUtils.NUM_FORMAT, "Commit count", metricsMap.get( Metric.MetricType.COMMIT_COUNT ).longValue() );
 
         System.out.println( BatchUtils.SEPARATOR );
+    }
+
+    private static void printPreviousExecutions ( JobOperator jobOperator ) {
+        List<JobInstance> jobInstances = jobOperator.getJobInstances( "sampleJob", 0, 1000 );
+        jobInstances.forEach( i -> jobOperator.getJobExecutions( i )
+                .forEach( ex -> System.out.println("id: " + ex.getExecutionId() + ", status: " + ex.getExitStatus() ) ) );
+
+        /*List<Long> runningExecutions = jobOperator.getRunningExecutions( "sampleJob" );
+        runningExecutions.forEach( e -> System.out.println(e) );*/
     }
 }

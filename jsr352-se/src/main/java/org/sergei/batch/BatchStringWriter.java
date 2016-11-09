@@ -7,10 +7,7 @@ import javax.batch.runtime.BatchRuntime;
 import javax.batch.runtime.JobExecution;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -42,16 +39,21 @@ public class BatchStringWriter implements ItemWriter {
     @Override
     public void writeItems(List<Object> list) throws Exception {
 
-        for(Object line : list) {
-
+        list.forEach( line -> {
             /*if ( line != null && retries < 1 && ((String) line).startsWith("n") ) {
                 retries++;
                 System.out.println("Throw UnsupportedOperationException in StringWriter");
                 throw new UnsupportedOperationException();
             }*/
             lineNumber++;
-            writer.write(line + "\n");
-        }
+
+            try {
+                writer.write(line + "\n");
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        } );
+
     }
 
     @Override

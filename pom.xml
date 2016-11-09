@@ -11,10 +11,10 @@
 
     <modules>
         <module>jsr352-se</module>
-        <module>wf-sample-2</module>
+        <module>jberet-app</module>
         <module>spring-batch</module>
         <module>spring-batch-adm</module>
-        <module>spring-batch-boot</module>
+        <module>spring-batch-boot-app</module>
     </modules>
 
     <properties>

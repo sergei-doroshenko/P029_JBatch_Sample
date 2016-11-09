@@ -25,7 +25,7 @@
             <reader ref="sampleChunkReader">
                 <properties>
                     <property name="fileName"
-                              value="#{jobParameters['file.in']}?:batchFiles/in/words.txt;"/>
+                              value="#{jobParameters['file.in']}?:batchFiles/in/input.txt;"/>
                 </properties>
             </reader>
             <processor ref="sampleChunkProcessor"/>

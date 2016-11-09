@@ -12,6 +12,7 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,9 @@ import org.springframework.context.annotation.Configuration;
 @EnableAutoConfiguration
 public class BatchConfiguration {
 
+    @Value("${name:Default}")
+    private String name;
+
     @Autowired
     private JobBuilderFactory jobBuilderFactory;
 
@@ -35,7 +39,7 @@ public class BatchConfiguration {
         return stepBuilderFactory.get("step1")
                 .tasklet(new Tasklet() {
                     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) {
-                        System.out.println("I'm started!");
+                        System.out.println( "I'm started: " + name );
                         return null;
                     }
                 })
@@ -44,7 +48,7 @@ public class BatchConfiguration {
 
     @Bean
     public Job job(Step step1) throws Exception {
-        return jobBuilderFactory.get("job1")
+        return jobBuilderFactory.get( name )
                 .incrementer(new RunIdIncrementer())
                 .start((Step) step1)
                 .build();
