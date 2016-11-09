@@ -1,0 +1,1 @@
+java -jar target/spring-batch-boot-1.4.2.RELEASE.jar --name="Spring"
