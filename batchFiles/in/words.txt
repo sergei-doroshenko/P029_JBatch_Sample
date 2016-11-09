@@ -1,7 +1,11 @@
+milk
+chunks
 hello
 goodbye
-test
-encapsulation
+greed
+red
 apple
-example
-home
+grow
+jump
+bog
+cat
