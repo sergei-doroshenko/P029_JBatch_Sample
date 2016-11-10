@@ -3,10 +3,7 @@ package org.sergei.batch;
 import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.ItemReader;
 import javax.inject.Inject;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.Serializable;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.stream.IntStream;
@@ -32,9 +29,14 @@ public class BatchStringReader implements ItemReader {
 
         if (serializable != null) {
             lineNumber = (Integer) serializable;
-            for (int i = 0; i < lineNumber; i++) {
-                lineReader.readLine();
-            }
+
+            IntStream.range(0, lineNumber).forEach(i -> {
+                try {
+                    lineReader.readLine();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
