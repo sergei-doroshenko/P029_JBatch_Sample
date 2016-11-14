@@ -14,14 +14,14 @@
 
     <step id="simpleConvert" next="compressStep">
         <listeners>
-            <listener ref="stringItemReadListener"/>
+            <!--<listener ref="stringItemReadListener"/>-->
             <listener ref="stringItemWriteListener"/>
-            <listener ref="stringSkipReadListener"/>
+            <!--<listener ref="stringSkipReadListener"/>-->
             <listener ref="stringRetryWriteListener"/>
-            <listener ref="stringItemProcessorListener"/>
+            <!--<listener ref="stringItemProcessorListener"/>-->
         </listeners>
 
-        <chunk checkpoint-policy="item" item-count="10000" skip-limit="3" retry-limit="3">
+        <chunk checkpoint-policy="item" item-count="3" skip-limit="3" retry-limit="3">
             <reader ref="sampleChunkReader">
                 <properties>
                     <property name="fileName"

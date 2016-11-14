@@ -11,8 +11,6 @@
         <listeners>
             <listener ref="stringItemReadListener"/>
             <listener ref="stringItemWriteListener"/>
-            <listener ref="stringSkipReadListener"/>
-            <listener ref="stringRetryWriteListener"/>
             <listener ref="stringItemProcessorListener"/>
         </listeners>
 
@@ -28,12 +26,6 @@
                     <property name="fileName" value="#{partitionPlan['output.fileName']}"/>
                 </properties>
             </writer>
-            <skippable-exception-classes>
-                <include class="java.lang.IllegalArgumentException"/>
-            </skippable-exception-classes>
-            <retryable-exception-classes>
-                <include class="java.lang.UnsupportedOperationException"/>
-            </retryable-exception-classes>
         </chunk>
         <partition>
             <mapper ref="fileSplitPartitionMapper">

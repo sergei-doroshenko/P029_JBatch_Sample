@@ -1,5 +1,9 @@
 package org.sergei.batch;
 
+import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.io.Files;
+
 import javax.batch.api.BatchProperty;
 import javax.batch.api.chunk.ItemWriter;
 import javax.batch.operations.JobOperator;
@@ -25,8 +29,7 @@ public class BatchStringWriter implements ItemWriter {
     @Override
     public void open(Serializable serializable) throws Exception {
         String fileName = jobContext.getProperties().getProperty( "file.out" );
-//        writer = new BufferedWriter(new FileWriter(fileName, true));
-        writer = new BufferedWriter(new FileWriter(new File(fileName)));
+        writer = new BufferedWriter(new FileWriter(fileName, true));
     }
 
     @Override
@@ -38,13 +41,12 @@ public class BatchStringWriter implements ItemWriter {
 
     @Override
     public void writeItems(List<Object> list) throws Exception {
-
         list.forEach( line -> {
-            /*if ( line != null && retries < 1 && ((String) line).startsWith("n") ) {
+            if ( line != null && retries < 1 && ((String) line).startsWith("g") ) {
                 retries++;
                 System.out.println("Throw UnsupportedOperationException in StringWriter");
                 throw new UnsupportedOperationException();
-            }*/
+            }
             lineNumber++;
 
             try {

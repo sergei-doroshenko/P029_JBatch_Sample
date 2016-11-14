@@ -26,7 +26,5 @@ public class ArchivePartitionReducerImpl extends AbstractPartitionReducer {
             String zipFileName = "batchFiles\\partition.zip";
             ZipUtil.pack(new File(fileName), new File(zipFileName));
         }
-
-        System.out.println("PartitionStatus: " + status);
     }
 }
