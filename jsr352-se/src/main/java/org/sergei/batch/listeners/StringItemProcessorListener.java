@@ -8,19 +8,19 @@ import javax.inject.Named;
  */
 public class StringItemProcessorListener extends AbstractItemProcessListener {
 
-    @Override
-    public void beforeProcess(Object item) throws Exception {
-        System.out.println("StringItemProcessorListener.beforeProcess: "
-                + item
-                + ", thread : " + Thread.currentThread().getName());
-    }
+//    @Override
+//    public void beforeProcess(Object item) throws Exception {
+//        System.out.println("StringItemProcessorListener.beforeProcess: "
+//                + item
+//                + ", thread : " + Thread.currentThread().getName());
+//    }
 
     @Override
     public void afterProcess(Object item, Object result) throws Exception {
         System.out.println("StringItemProcessorListener.afterProcess: "
                 + item + ", "
                 + result
-                + ", thread : " + Thread.currentThread().getName() );
+                + ", thread : " + Thread.currentThread().getName() + '\n');
     }
 
     @Override

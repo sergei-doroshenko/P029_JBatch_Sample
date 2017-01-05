@@ -7,14 +7,14 @@ import javax.batch.api.chunk.listener.AbstractItemReadListener;
  */
 public class StringItemReadListener extends AbstractItemReadListener {
 
-    @Override
-    public void beforeRead() throws Exception {
-        System.out.println("StringItemReadListener.beforeRead" + ", thread : " + Thread.currentThread().getName());
-    }
+//    @Override
+//    public void beforeRead() throws Exception {
+//        System.out.println("StringItemReadListener.beforeRead" + ", thread : " + Thread.currentThread().getName());
+//    }
 
     @Override
     public void afterRead(Object item) throws Exception {
-        System.out.println("StringItemReadListener.afterRead: " + item + ", thread : " + Thread.currentThread().getName());
+        System.out.println("StringItemReadListener.afterRead: " + item + ", thread : " + Thread.currentThread().getName() + '\n');
     }
 
     @Override

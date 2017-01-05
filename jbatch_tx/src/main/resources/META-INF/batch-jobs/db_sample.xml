@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd"
+     version="1.0"
+     id="txSampleJob" restartable="true">
+    <step id="convert">
+        <chunk checkpoint-policy="item" item-count="5" skip-limit="3" retry-limit="3">
+            <reader ref="MyReader"/>
+            <processor ref="MyProcessor"/>
+            <writer ref="MyWriter"/>
+            <!--<skippable-exception-classes>-->
+                <!--<include class="java.lang.IllegalArgumentException"/>-->
+            <!--</skippable-exception-classes>-->
+            <!--<retryable-exception-classes>-->
+                <!--<include class="java.lang.UnsupportedOperationException"/>-->
+            <!--</retryable-exception-classes>-->
+        </chunk>
+    </step>
+</job>

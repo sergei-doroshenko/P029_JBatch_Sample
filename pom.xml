@@ -15,6 +15,7 @@
         <module>spring-batch</module>
         <module>spring-batch-adm</module>
         <module>spring-batch-boot-app</module>
+        <module>jbatch_tx</module>
     </modules>
 
     <properties>

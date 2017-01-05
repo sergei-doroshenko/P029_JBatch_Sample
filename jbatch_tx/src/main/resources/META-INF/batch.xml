@@ -1,0 +1,5 @@
+<batch-artifacts xmlns="http://xmlns.jcp.org/xml/ns/javaee">
+    <ref id="iReader" class="org.sergei.batch.tx.MyReader"/>
+    <ref id="iProcessor" class="org.sergei.batch.tx.MyProcessor"/>
+    <ref id="iWriter" class="org.sergei.batch.tx.MyWriter"/>
+</batch-artifacts>

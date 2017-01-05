@@ -8,14 +8,14 @@ import java.util.List;
  */
 public class StringItemWriteListener extends AbstractItemWriteListener {
 
-    @Override
-    public void beforeWrite(List items) throws Exception {
-        System.out.println("StringItemWriteListener.beforeWrite: " + items + ", thread : " + Thread.currentThread().getName());
-    }
+//    @Override
+//    public void beforeWrite(List items) throws Exception {
+//        System.out.println("StringItemWriteListener.beforeWrite: " + items + ", thread : " + Thread.currentThread().getName());
+//    }
 
     @Override
     public void afterWrite(List items) throws Exception {
-        System.out.println("StringItemWriteListener.afterWrite: " + items + ", thread : " + Thread.currentThread().getName());
+        System.out.println("StringItemWriteListener.afterWrite: " + items + ", thread : " + Thread.currentThread().getName() + '\n');
     }
 
     @Override
