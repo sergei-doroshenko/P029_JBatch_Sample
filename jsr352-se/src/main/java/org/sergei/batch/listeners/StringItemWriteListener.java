@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class StringItemWriteListener extends AbstractItemWriteListener {
 
-//    @Override
-//    public void beforeWrite(List items) throws Exception {
-//        System.out.println("StringItemWriteListener.beforeWrite: " + items + ", thread : " + Thread.currentThread().getName());
-//    }
+    /*@Override
+    public void beforeWrite(List items) throws Exception {
+        System.out.println("StringItemWriteListener.beforeWrite: " + items + ", thread : " + Thread.currentThread().getName());
+    }*/
 
     @Override
     public void afterWrite(List items) throws Exception {
@@ -20,6 +20,6 @@ public class StringItemWriteListener extends AbstractItemWriteListener {
 
     @Override
     public void onWriteError(List items, Exception ex) throws Exception {
-        System.out.println("StringItemWriteListener.onError: " + items + ", " + ex.getLocalizedMessage() + ", thread : " + Thread.currentThread().getName());
+        System.out.println("StringItemWriteListener.onError: " + items + ", " + ex.getMessage() + ", thread : " + Thread.currentThread().getName());
     }
 }
