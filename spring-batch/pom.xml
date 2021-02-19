@@ -13,7 +13,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <spring.batch.version>3.0.3.RELEASE</spring.batch.version>
+        <spring.batch.version>[3.0.10,)</spring.batch.version>
         <spring.jdbc.version>4.0.5.RELEASE</spring.jdbc.version>
         <spring.oxm.version>4.0.5.RELEASE</spring.oxm.version>
         <commons.version>[3.2.2,)</commons.version>
